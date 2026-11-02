@@ -1,9 +1,8 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import type { TiptapDoc, TiptapMark, TiptapNode, TiptapTextNode } from "./content";
 import { resolveAttachmentKind } from "./attachment-kind";
-import { getAttachmentFilenameFromLabel, resourceLinkToMarkdown } from "./resource-links";
+import { getAttachmentFilenameFromLabel } from "./resource-links";
 import { normalizeAttachmentByteSize } from "./attachment-metadata";
-import { decodeString } from "micromark-util-decode-string";
 
 export const FILE_ATTACHMENT_NODE_TYPE = "edgeeverFileAttachment" as const;
 export const FILE_DISPLAY_MODES = ["compact", "inline"] as const;
@@ -13,9 +12,12 @@ export type FileDisplayMode = (typeof FILE_DISPLAY_MODES)[number];
 export const resolveFileDisplayMode = (value: unknown): FileDisplayMode =>
   value === "compact" ? "compact" : "inline";
 
-const MARKDOWN_LINK_PATTERN = /^\[((?:\\.|[^[\]\\])+)\]\(([^\s)]+)(?:\s+"[^"]*")?\)/;
+const MARKDOWN_LINK_PATTERN = /^\[([^\]]+)\]\(([^\s)]+)(?:\s+"[^"]*")?\)/;
 const ATTACHMENT_LABEL_PATTERN = /^\s*(?:附件[：:]|Attachment:)\s*/i;
 const RESOURCE_URL_PATTERN = /(?:\/api\/v1\/resources\/|edgeever-(?:resource|staged):\/\/)/i;
+
+const escapeMarkdownLabel = (value: string) =>
+  value.replace(/\\/g, "\\\\").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
 
 export const isFileAttachmentLink = (label: string, url: string) => {
   if (resolveAttachmentKind(null, getAttachmentFilenameFromLabel(label)) === "pdf" || resolveAttachmentKind(null, url) === "pdf") {
@@ -104,7 +106,7 @@ export const FileAttachment = Node.create({
   },
 
   renderMarkdown: (node) =>
-    resourceLinkToMarkdown(String(node.attrs?.label || "Attachment"), String(node.attrs?.url || "")),
+    `[${escapeMarkdownLabel(String(node.attrs?.label || "Attachment"))}](${String(node.attrs?.url || "")})`,
 
   markdownTokenizer: {
     name: FILE_ATTACHMENT_NODE_TYPE,
@@ -114,13 +116,11 @@ export const FileAttachment = Node.create({
     },
     tokenize(source: string) {
       const match = MARKDOWN_LINK_PATTERN.exec(source);
-      if (!match) return undefined;
-      const label = decodeString(match[1]);
-      if (!isFileAttachmentLink(label, match[2])) return undefined;
+      if (!match || !isFileAttachmentLink(match[1], match[2])) return undefined;
       return {
         type: FILE_ATTACHMENT_NODE_TYPE,
         raw: match[0],
-        label,
+        label: match[1],
         url: match[2],
       };
     },

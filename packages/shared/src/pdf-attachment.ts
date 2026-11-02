@@ -1,8 +1,7 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import type { TiptapDoc, TiptapMark, TiptapNode, TiptapTextNode } from "./content";
-import { getAttachmentFilenameFromLabel, resourceLinkToMarkdown } from "./resource-links";
+import { getAttachmentFilenameFromLabel } from "./resource-links";
 import { normalizeAttachmentByteSize } from "./attachment-metadata";
-import { decodeString } from "micromark-util-decode-string";
 
 export const PDF_ATTACHMENT_NODE_TYPE = "edgeeverPdfAttachment" as const;
 export const PDF_DISPLAY_MODES = ["compact", "inline"] as const;
@@ -11,10 +10,13 @@ export type PdfDisplayMode = (typeof PDF_DISPLAY_MODES)[number];
 export const resolvePdfDisplayMode = (value: unknown): PdfDisplayMode =>
   value === "inline" ? "inline" : "compact";
 
-const PDF_LINK_PATTERN = /^\[((?:\\.|[^[\]\\])+)\]\(([^\s)]+)(?:\s+"[^"]*")?\)/;
+const PDF_LINK_PATTERN = /^\[([^\]]+)\]\(([^\s)]+)(?:\s+"[^"]*")?\)/;
 
 export const isPdfAttachment = (mimeType: string | null | undefined, filename: string | null | undefined) =>
   mimeType?.toLowerCase() === "application/pdf" || filename?.trim().toLowerCase().endsWith(".pdf") === true;
+
+const escapeMarkdownLabel = (value: string) =>
+  value.replace(/\\/g, "\\\\").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
 
 export const PdfAttachment = Node.create({
   name: PDF_ATTACHMENT_NODE_TYPE,
@@ -90,7 +92,7 @@ export const PdfAttachment = Node.create({
     },
   }),
 
-  renderMarkdown: (node) => resourceLinkToMarkdown(String(node.attrs?.label || "PDF"), String(node.attrs?.url || "")),
+  renderMarkdown: (node) => `[${escapeMarkdownLabel(String(node.attrs?.label || "PDF"))}](${String(node.attrs?.url || "")})`,
 
   markdownTokenizer: {
     name: PDF_ATTACHMENT_NODE_TYPE,
@@ -101,15 +103,13 @@ export const PdfAttachment = Node.create({
     },
     tokenize(source: string) {
       const match = PDF_LINK_PATTERN.exec(source);
-      if (!match) return undefined;
-      const label = decodeString(match[1]);
-      if (!isPdfAttachment(null, label) && !isPdfAttachment(null, match[2])) {
+      if (!match || !isPdfAttachment(null, match[1]) && !isPdfAttachment(null, match[2])) {
         return undefined;
       }
       return {
         type: PDF_ATTACHMENT_NODE_TYPE,
         raw: match[0],
-        label,
+        label: match[1],
         url: match[2],
       };
     },

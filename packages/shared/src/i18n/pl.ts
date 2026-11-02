@@ -1,9 +1,7 @@
-import { noteImportPl } from "./note-import";
 import { memoTemplateSeedTranslations } from "../memo-template-seeds";
 
 // Shared by the PWA and native mobile clients.
 export const pl = {
-  noteImport: noteImportPl,
   notebookAppearance: {
     inversion: "Odwrócenie",
     invertOff: "Wyłączone",
@@ -527,7 +525,6 @@ export const pl = {
     cloudflareChallenge: "Weryfikacja przeglądarki Cloudflare przechwyciła żądanie API logowania i nie może zostać wykonana na tej stronie. Poproś administratora instancji o dostosowanie reguły WAF Challenge dla logowania.",
     securityPolicyBlocked: "Zasada zabezpieczeń zablokowała żądanie, zanim dotarło do EdgeEver. Poproś administratora instancji o sprawdzenie Cloudflare Security Events, Access, WAF lub reguł odwrotnego serwera proxy.",
     requestForbidden: "Instancja odrzuciła żądanie logowania (HTTP 403). Poproś administratora instancji o sprawdzenie zasad dostępu.",
-    databaseDailyQuotaExceeded: "Wyczerpano dzienny limit bazy danych Cloudflare D1 tej instancji. Limit odnawia się o 00:00 UTC. Administrator może też przejść na płatny plan Workers.",
     instanceServerError: "Instancja jest tymczasowo niedostępna. Spróbuj ponownie później.",
     requestRejected: "Instancja odrzuciła żądanie logowania (HTTP {{status}}). Skontaktuj się z administratorem instancji.",
     invalidInstanceResponse: "To nie jest prawidłowa instancja EdgeEver. Sprawdź adres instancji.",
@@ -2162,7 +2159,7 @@ export const pl = {
     },
     errors: {
       backup_name_invalid: "Wpisz prawidłową nazwę pliku bez ścieżek, nazw zastrzeżonych i znaków specjalnych.",
-      backup_name_exists: "Plik o tej nazwie już istnieje. Spróbuj ponownie za chwilę; istniejący plik nie został zmieniony.",
+      backup_name_exists: "Plik o tej nazwie już istnieje. Wybierz inną nazwę; istniejący plik nie został zmieniony.",
       backup_file_replaced: "Plik kopii został zastąpiony. Nie wykonano operacji.",
       backup_configuration_unavailable: "Nie można odczytać ustawień kopii lub usunąć plików tymczasowych. Sprawdź uprawnienia folderu danych aplikacji i uruchom ją ponownie.",
       backup_too_large: "Limit szyfrowanego archiwum wynosi 64 GiB minus 32 bajty. Dla większego pliku wybierz kopię bez szyfrowania.",

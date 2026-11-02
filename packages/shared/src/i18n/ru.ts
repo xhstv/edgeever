@@ -1,9 +1,7 @@
-import { noteImportRu } from "./note-import";
 import { memoTemplateSeedTranslations } from "../memo-template-seeds";
 
 // Shared by the PWA and native mobile clients.
 export const ru = {
-  noteImport: noteImportRu,
   notebookAppearance: {
     inversion: "Инверсия",
     invertOff: "Выключена",
@@ -538,7 +536,6 @@ export const ru = {
     cloudflareChallenge: "Браузерная проверка Cloudflare перехватила API входа и не может выполниться на этой странице. Попросите администратора инстанса настроить правило WAF Challenge для входа.",
     securityPolicyBlocked: "Политика безопасности заблокировала запрос до EdgeEver. Попросите администратора инстанса проверить Cloudflare Security Events, Access, WAF или правила обратного прокси.",
     requestForbidden: "Инстанс отклонил запрос на вход (HTTP 403). Попросите администратора инстанса проверить политику доступа.",
-    databaseDailyQuotaExceeded: "Исчерпан суточный лимит базы данных Cloudflare D1 этого инстанса. Лимит сбрасывается в 00:00 UTC. Администратор также может перейти на платный тариф Workers.",
     instanceServerError: "Инстанс временно недоступен. Попробуйте позже.",
     requestRejected: "Инстанс отклонил запрос на вход (HTTP {{status}}). Обратитесь к администратору инстанса.",
     invalidInstanceResponse: "Это недействительный инстанс EdgeEver. Проверьте адрес инстанса.",
@@ -2173,7 +2170,7 @@ export const ru = {
     },
     errors: {
       backup_name_invalid: "Введите допустимое имя файла без пути, зарезервированных имён и специальных символов.",
-      backup_name_exists: "Файл с таким именем уже существует. Повторите резервное копирование чуть позже; существующий файл не изменён.",
+      backup_name_exists: "Файл с таким именем уже существует. Выберите другое имя; существующий файл не изменён.",
       backup_file_replaced: "Файл резервной копии был заменён. Действие не выполнено.",
       backup_configuration_unavailable: "Не удалось прочитать настройки или очистить временные файлы. Проверьте права доступа к папке данных приложения и перезапустите его.",
       backup_too_large: "Размер зашифрованной копии ограничен 64 ГиБ минус 32 байта. Для большего архива отключите шифрование.",

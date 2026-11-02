@@ -1,9 +1,7 @@
-import { noteImportJa } from "./note-import";
 import { memoTemplateSeedTranslations } from "../memo-template-seeds";
 
 // Shared by the PWA and native mobile clients.
 export const ja = {
-  noteImport: noteImportJa,
   notebookAppearance: {
     inversion: "反転",
     invertOff: "なし",
@@ -527,7 +525,6 @@ export const ja = {
     cloudflareChallenge: "Cloudflare のブラウザチャレンジがログイン API を遮断し、このページでは完了できません。インスタンス管理者に、ログイン向けの WAF Challenge ルールの調整を依頼してください。",
     securityPolicyBlocked: "セキュリティポリシーが、リクエストが EdgeEver に届く前に遮断しました。インスタンス管理者に、Cloudflare Security Events、Access、WAF、またはリバースプロキシのルール確認を依頼してください。",
     requestForbidden: "インスタンスがログインリクエストを拒否しました（HTTP 403）。インスタンス管理者にアクセスポリシーの確認を依頼してください。",
-    databaseDailyQuotaExceeded: "インスタンスの Cloudflare D1 の1日のデータベース上限に達しました。UTC 00:00 にリセットされます。管理者は Workers プランをアップグレードすることもできます。",
     instanceServerError: "インスタンスで一時的なエラーが発生しています。しばらくしてから再試行してください。",
     requestRejected: "インスタンスがログインリクエストを拒否しました（HTTP {{status}}）。インスタンス管理者に連絡してください。",
     invalidInstanceResponse: "有効な EdgeEver インスタンスではありません。インスタンスアドレスを確認してください。",
@@ -2162,7 +2159,7 @@ export const ja = {
     },
     errors: {
       backup_name_invalid: "パス、予約名、特殊文字を含まない有効なファイル名を入力してください。",
-      backup_name_exists: "同名のファイルがあります。少し待ってから再度バックアップしてください。既存のファイルは変更されていません。",
+      backup_name_exists: "同名のファイルがあります。別の名前を選んでください。既存のファイルは変更されていません。",
       backup_file_replaced: "バックアップファイルが置き換えられたため、操作を中止しました。",
       backup_configuration_unavailable: "バックアップ設定の読み取りか一時ファイルの削除に失敗しました。アプリのデータフォルダーの権限を確認し、再起動してください。",
       backup_too_large: "暗号化アーカイブの上限は 64 GiB から 32 バイトを引いたサイズです。より大きい場合は暗号化なしで保存してください。",

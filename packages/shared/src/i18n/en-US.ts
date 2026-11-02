@@ -1,9 +1,7 @@
-import { noteImportEnUS } from "./note-import";
 import { memoTemplateSeedTranslations } from "../memo-template-seeds";
 
 // Shared by the PWA and native mobile clients.
 export const enUS = {
-  noteImport: noteImportEnUS,
   notebookAppearance: {
     inversion: "Invert",
     invertOff: "Off",
@@ -538,7 +536,6 @@ export const enUS = {
     cloudflareChallenge: "A Cloudflare browser challenge intercepted the login API and cannot run in this page. Ask the instance administrator to adjust the WAF Challenge rule for login.",
     securityPolicyBlocked: "A security policy blocked the request before it reached EdgeEver. Ask the instance administrator to check Cloudflare Security Events, Access, WAF, or reverse-proxy rules.",
     requestForbidden: "The instance rejected the login request (HTTP 403). Ask the instance administrator to check its access policy.",
-    databaseDailyQuotaExceeded: "The instance’s Cloudflare D1 daily database quota is exhausted. It resets at 00:00 UTC. The instance owner can also upgrade the Workers plan.",
     instanceServerError: "The instance is temporarily unavailable. Try again later.",
     requestRejected: "The instance rejected the login request (HTTP {{status}}). Contact the instance administrator.",
     invalidInstanceResponse: "This is not a valid EdgeEver instance. Check the instance address.",
@@ -2173,7 +2170,7 @@ export const enUS = {
     },
     errors: {
       backup_name_invalid: "Enter a valid filename without paths, reserved names or special characters.",
-      backup_name_exists: "A file with this name already exists. Try again in a moment; the existing file is unchanged.",
+      backup_name_exists: "A file with this name already exists. Choose another name; the existing file is unchanged.",
       backup_file_replaced: "The backup file was replaced. No action was taken.",
       backup_configuration_unavailable: "Could not read backup settings or clean private staging. Check the app data folder permissions and restart.",
       backup_too_large: "Encrypted backups are limited to 64 GiB minus 32 bytes. Choose an unencrypted backup for a larger archive.",

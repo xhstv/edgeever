@@ -1,4 +1,3 @@
-import { isDatabaseDailyQuotaError } from "./database-errors";
 import {
   createExcerpt,
   docToText,
@@ -6,7 +5,6 @@ import {
   normalizeTags,
 } from "@edgeever/shared";
 import { Hono } from "hono";
-import { registerImportContextGuard, registerImportRoutes } from "./import-routes";
 import { cors } from "hono/cors";
 import { resolveContainerImageSource } from "./container-image-source";
 import apiProbe from "../../../docs/openapi.json";
@@ -165,7 +163,7 @@ app.use(
   "/api/*",
   cors({
     origin: API_CORS_ORIGINS,
-    allowHeaders: ["Content-Type", "Authorization", "x-edgeever-import-context"],
+    allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -326,8 +324,6 @@ app.use("/api/v1/*", async (c, next) => {
   await next();
 });
 
-registerImportContextGuard(app);
-
 registerObjectStorageRoutes(app, {
   isDemoMode: (...args) => isDemoMode(...args),
 });
@@ -351,7 +347,6 @@ registerSyncRoutes(app, {
   clampNumber: (...args) => clampNumber(...args),
   mapMemoDetail: (...args) => mapMemoDetail(...args),
 });
-registerImportRoutes(app);
 registerTagRoutes(app);
 registerPosterRenderRoutes(app);
 registerPluginDistributionRoutes(app);
@@ -520,12 +515,6 @@ app.onError((error, c) => {
 
   const requestError = httpExceptionError(c, error);
   if (requestError) return requestError;
-
-  if (isDatabaseDailyQuotaError(error)) {
-    console.error("EdgeEver database daily quota exhausted", error);
-    return apiError(c, "database_daily_quota_exceeded",
-      "The instance's Cloudflare D1 daily database quota is exhausted. Daily quotas reset at 00:00 UTC. The instance owner can also upgrade the Workers plan.", 503);
-  }
 
   if (isDatabaseNotReadyError(error)) {
     console.error("EdgeEver database readiness check failed", error);

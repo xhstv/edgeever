@@ -1,9 +1,7 @@
-import { noteImportZhCN } from "./note-import";
 import { memoTemplateSeedTranslations } from "../memo-template-seeds";
 
 // Shared by the PWA and native mobile clients.
 export const zhCN = {
-  noteImport: noteImportZhCN,
   notebookAppearance: {
     inversion: "反转",
     invertOff: "关闭",
@@ -538,7 +536,6 @@ export const zhCN = {
     cloudflareChallenge: "Cloudflare 人机验证拦截了登录接口，当前页面无法完成该验证。请实例管理员调整针对登录接口的 WAF Challenge 规则。",
     securityPolicyBlocked: "登录请求在到达 EdgeEver 前被安全策略拦截。请实例管理员检查 Cloudflare Security Events、Access、WAF 或反向代理规则。",
     requestForbidden: "实例拒绝了登录请求（HTTP 403）。请实例管理员检查访问策略。",
-    databaseDailyQuotaExceeded: "实例的 Cloudflare D1 当日数据库额度已耗尽，额度每天在北京时间 08:00 重置。实例管理员也可升级 Workers 套餐解除此限制。",
     instanceServerError: "实例暂时出错，请稍后再试。",
     requestRejected: "实例拒绝了登录请求（HTTP {{status}}）。请联系实例管理员。",
     invalidInstanceResponse: "这个地址不是有效的 EdgeEver 实例，请检查实例地址。",
@@ -2173,7 +2170,7 @@ export const zhCN = {
     },
     errors: {
       backup_name_invalid: "请输入有效文件名，不要包含路径、保留名称或特殊字符。",
-      backup_name_exists: "已存在同名文件，请稍后重新备份。原文件未改动。",
+      backup_name_exists: "已存在同名文件，请修改名称。原文件未改动。",
       backup_file_replaced: "备份文件已被替换，未执行操作。",
       backup_configuration_unavailable: "无法读取备份设置或清理私有暂存。请检查应用数据目录权限并重启。",
       backup_too_large: "加密归档上限为 64 GiB 减 32 字节。更大的归档请选择不加密备份。",
